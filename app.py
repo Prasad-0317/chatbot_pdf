@@ -8,7 +8,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import HuggingFaceHub
-from htmlTemplates import css, bot_template, user_template
+from htmlTemplates import html,css, bot_template, user_template
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -58,7 +58,7 @@ def handle_userInput(user_que):
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="Chat with multiple pdfs", page_icon=":books:")
+    st.set_page_config(page_title="Chat with multiple pdfs ..", page_icon=":books:")
     st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
@@ -67,9 +67,10 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None   
 
-    st.header("Chat with multiple PDFs :books:")
+    st.markdown(html,unsafe_allow_html=True)
 
-    user_que = st.text_input("Ask questions about your documents:")
+    user_que = st.text_input(":blue[Type question here] :grey_question:")
+   
     if user_que:
         handle_userInput(user_que)
 
@@ -77,6 +78,16 @@ def main():
     st.write(bot_template.replace("{{MSG}}","Hello Human...") , unsafe_allow_html=True)
 
     with st.sidebar:
+        st.markdown(
+            """
+            <style>
+            .sidebar .sidebar-content {
+                background-color: #141b27; /* You can change the color code here */
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
         st.subheader("Your Documents")
         pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process' " , accept_multiple_files=True)
 
@@ -98,3 +109,14 @@ def main():
 if __name__ == '__main__':
     main()
     
+
+# st.markdown(
+# '''
+# <style>
+# input{
+#     font-color:white,
+#     font-size: 20rem !important;
+# }
+# </style>
+# ''' , unsafe_allow_html=True
+# )
