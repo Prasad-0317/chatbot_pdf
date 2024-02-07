@@ -1,18 +1,19 @@
 import streamlit as st
-import pdfplumber
-from PyPDF2 import PdfReader
-
-st.title("Chat with PDF...")
-st.write("Upload a PDF and start chatting!") 
-
-def extract_text_pdf(pdf):
-    pdf_reader = PdfReader(pdf)
-    return ''.join(page.extract_text() for page in pdf_reader.pages)
+from dotenv import load_dotenv
 
 def main():
-    pdf = st.file_uploader('Choose your .pdf file', type="pdf")
-    if pdf : text = extract_text_pdf(pdf)
-    st.write("PDF Content Extracted!")
-    st.write(text)
+    load_dotenv()
+    st.set_page_config(page_title="Chat with multiple pdfs", page_icon=":books:")
+    st.header("Chat with multiple PDFs :books:")
+    st.text_input("Ask questions about your documents:")
 
-if __name__ == '__main__': main() 
+    with st.sidebar:
+        st.subheader("Your Documents")
+        pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process' " , accept_multiple_files=True)
+
+        if st.button("Process"):
+            
+
+if __name__ == '__main__':
+    main
+    
